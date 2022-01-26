@@ -34,7 +34,6 @@ resources: # actual config for table
         ProvisionedThroughput: # # how much min you want to read and write data in table
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-        AccessControl: Private # table will be private
 
 functions:
   getAllPost:
