@@ -1,0 +1,94 @@
+#aws curd app
+#version 1.0.0
+
+service: aws-dynamoDB-crud-app
+provider:
+  name: aws
+  runtime: nodejs14.x  
+  lambdaHashingVersion: 20201221
+  stage: dev
+  region: ap-south-1
+  iamRoleStatements: # permissions for all of your functions can be set here
+    - Effect: Allow
+      Action: # action for lambda fun can do with dynamodb
+        - "dynamodb:Put*"
+        - "dynamodb:Get*"
+        - "dynamodb:Delete*"
+        - "dynamodb:Scan*"
+      Resources: arn:aws:DynamoDB:::${self:service}-${self:provider.stage}-table/*
+  environment:
+    DYNAMODB_TABLE_NAME: ${self:service}-${self:provider.stage}-table # table name use for data
+
+resources: # actual config for table
+  Resources:
+    BlogTable:
+      Type: AWS::DynamoDB::Table # serverless name of table
+      Properties:
+        TableName: ${self:service}-${self:provider.stage}-table # s3 table name
+        AttributeDefinitions: # blog fields name
+          - AttributeName: postId #field name
+            AttributeType: S # post id will be string
+        keySchema: # it will generate key for post id
+          - AttributeName: postId
+            KeyType: HASH # generate hast id for post id
+        ProvisionedThroughput: # # how much min you want to read and write data in table
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        AccessControl: Private # table will be private
+
+functions:
+  getAllPost:
+      handler: src/api.getAllPost     
+      name: get-all-post # lambda function name
+      description: this function for getting the all posts from dynamodb table
+      timeout: 5 #sec to execute otherwise fail
+      memorySize: 128 #it will take max size
+      events:
+        - http: # endpoint and params for api gatway
+            path: post
+            method: get
+            private: true
+  getPost:
+    handler: src/api.getPost     
+    name: get-post # lambda function name
+    description: this function for getting the post from dynamodb table
+    timeout: 5 #sec to execute otherwise fail
+    memorySize: 128 #it will take max size
+    events:
+      - http: # endpoint and params for api gatway
+          path: post/{postId}
+          method: get
+          private: true
+  createPost:
+    handler: src/api.createPost     
+    name: make-post # lambda function name
+    description: this function create post into dynamodb table
+    timeout: 5 #sec to execute otherwise fail
+    memorySize: 128 #it will take max size
+    events:
+      - http: # endpoint and params for api gatway
+          path: post
+          method: post
+          private: true
+  updatePost:
+    handler: src/api.updatePost     
+    name: update-post # lambda function name
+    description: this function update posts into dynamodb table
+    timeout: 5 #sec to execute otherwise fail
+    memorySize: 128 #it will take max size
+    events:
+      - http: # endpoint and params for api gatway
+          path: post/{postId}
+          method: put
+          private: true
+  deletePost:
+    handler: src/api.deletePost     
+    name: delete-post # lambda function name
+    description: this function delete posts into dynamodb table
+    timeout: 5 #sec to execute otherwise fail
+    memorySize: 128 #it will take max size
+    events:
+      - http: # endpoint and params for api gatway
+          path: post/{postId}
+          method: delete
+          private: true

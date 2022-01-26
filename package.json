@@ -1,0 +1,16 @@
+{
+  "name": "dynamodb-crud-app",
+  "version": "1.0.0",
+  "description": "crud app with aws dynamodb, lambda function, apigatway",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "dynamodb",
+    "lambda",
+    "apigatway"
+  ],
+  "author": "jay sean",
+  "license": "ISC"
+}
