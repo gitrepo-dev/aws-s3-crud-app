@@ -28,7 +28,7 @@ resources: # actual config for table
         AttributeDefinitions: # blog fields name
           - AttributeName: postId #field name
             AttributeType: S # post id will be string
-        keySchema: # it will generate key for post id
+        KeySchema: # it will generate key for post id
           - AttributeName: postId
             KeyType: HASH # generate hast id for post id
         ProvisionedThroughput: # # how much min you want to read and write data in table
