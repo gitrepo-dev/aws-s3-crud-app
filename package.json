@@ -12,5 +12,9 @@
     "apigatway"
   ],
   "author": "jay sean",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.48.0",
+    "@aws-sdk/util-dynamodb": "^3.48.0"
+  }
 }
