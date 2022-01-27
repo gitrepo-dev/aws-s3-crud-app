@@ -50,7 +50,7 @@ functions:
       memorySize: 128 #it will take max size
       events:
         - http: # endpoint and params for api gatway
-            path: post
+            path: posts
             method: get
             private: true
   getPost:
