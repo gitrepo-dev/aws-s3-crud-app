@@ -21,7 +21,7 @@ provider:
             - dynamodb:UpdateItem
             - dynamodb:DeleteItem
           # Resource: 'arn:aws:dynamodb:ap-south-1:*:*'
-      Resources: arn:aws:DynamoDB:::${self:service}-${self:provider.stage}-table/*
+      Resource: arn:aws:DynamoDB:::${self:service}-${self:provider.stage}-table/*
   environment:
     DYNAMODB_TABLE_NAME: ${self:service}-${self:provider.stage}-table # table name use for data
 
