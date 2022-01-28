@@ -42,14 +42,19 @@ resources: # actual config for table
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
 
-# custom:
-#   dynamodb:
-#         stages:
-#           - dev
-#         start:
-#           migrate: true
-#       serverless-offline:
-#         resourceRoutes: true # http proxy
+custom:
+  dynamodb:
+    stages:
+      - dev
+    start:
+      migrate: true
+  serverless-offline:
+        resourceRoutes: true # http proxy
+
+
+plugins:
+  - serverless-dynamodb-local
+  - serverless-offline
 
 functions:
   getAllPost:
