@@ -50,10 +50,6 @@ resources: # actual config for table
 #       serverless-offline:
 #         resourceRoutes: true # http proxy
 
-# plugins:
-#   - serverless-dynamodb-local
-#   - serverless-offline
-
 functions:
   getAllPost:
       handler: src/api.getAllPost     
