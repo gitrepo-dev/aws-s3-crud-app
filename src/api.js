@@ -14,11 +14,11 @@ const { marshall, unmarshall } = require("@aws-sdk/util-dynamodb");
 const getAllPost = async (e) => {
     const response = { statusCode: 200 }
     try {
-        const { Items } = await db.send(new ScanCommand({ TableName: process.env.DYNAMODB_TABLE_NAME })) // send params to dynamo client to get data
+        const { Items } = await db.send(new ScanCommand({ TableName: process.env.DYNAMODB_TABLE_NAME })); // send params to dynamo client to get data
         console.log({ Items })
         response.body = JSON.stringify({
             message: "Successfully retrieved all posts.",
-            data: Items.map((Item)=> unmarshall(Item)),
+            data: Items.map((item) => unmarshall(item)),
             Items
         })
     } catch (e) {
@@ -41,14 +41,15 @@ const getPost = async (e) => {
     const response = { statusCode: 200 }
     try {
         const params = {
-            TableName: process.env.DYNAMODB_TABLE_NAME, // table name from the serverless file
-            Key: marshall({ postId: e.pathParameters.postId }) // conver it in dynamo formate
-        }
-        const { Item } = await db.send(new GetItemCommand(params)) // send params to dynamo client to get data
+            TableName: process.env.DYNAMODB_TABLE_NAME,
+            Key: marshall({ postId: e.pathParameters.postId }),
+        };
+        const { Item } = await db.send(new GetItemCommand(params)); // send params to dynamo client to get data
         console.log({ Item })
         response.body = JSON.stringify({
             message: "Successfully retrieved post.",
-            data: (Item) ? unmarshall(Item) : {} //if item or date is defind then decode in json formate or send empty object
+            data: (Item) ? unmarshall(Item) : {},
+            rawData: Item, //if item or date is defind then decode in json formate or send empty object
         })
     } catch (e) {
         response.body = JSON.stringify({
@@ -111,10 +112,10 @@ const updatePost = async (e) => {
             }), {}),
             ExpressionAttributeValues: marshall(objKeys.reduce((acc, key, index) => ({
                 ...acc,
-                [`:value${index}`]: body[key],
+                [`:value${index}`]: obj[key],
             }), {})),
         };
-        const res = await db.send(new UpdateItemCommand(params))
+        const res = await db.send(new UpdateItemCommand(params));
         console.log(res)
         response.body = JSON.stringify({
             message: "Successfully updated post.",

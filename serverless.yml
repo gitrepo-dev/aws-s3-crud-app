@@ -130,7 +130,7 @@ functions:
         statements:
           - Effect: Allow
             Action:
-              - dynamodb:dynamodb:UpdateItem
+              - dynamodb:UpdateItem
             Resource: !GetAtt BlogTable.Arn
 
   deletePost:
@@ -149,5 +149,5 @@ functions:
         statements:
           - Effect: Allow
             Action:
-              - dynamodb:dynamodb:DeleteItem
+              - dynamodb:DeleteItem
             Resource: !GetAtt BlogTable.Arn  
