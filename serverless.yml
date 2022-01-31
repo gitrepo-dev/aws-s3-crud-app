@@ -53,13 +53,6 @@ functions:
             path: posts
             method: get
             private: false
-      iam:
-        role:
-          statements:
-            - Effect: Allow
-              Action:
-                - dynamodb:Scan
-              Resource: !GetAtt BlogTable.Arn
 
   getPost:
     handler: src/api.getPost     
@@ -72,17 +65,10 @@ functions:
           path: post/{postId}
           method: get
           private: false
-    iam:
-      role:
-        statements:
-          - Effect: Allow
-            Action:
-              - dynamodb:GetItem
-            Resource: !GetAtt BlogTable.Arn
 
   createPost:
     handler: src/api.createPost     
-    name: make-post # lambda function name
+    name: create-post # lambda function name
     description: this function create post into dynamodb table
     timeout: 10 #sec to execute otherwise fail
     memorySize: 128 #it will take max size
@@ -91,13 +77,6 @@ functions:
           path: post
           method: post
           private: false
-    iam:
-      role:
-        statements:
-          - Effect: Allow
-            Action:
-              - dynamodb:PutItem
-            Resource: !GetAtt BlogTable.Arn
 
   updatePost:
     handler: src/api.updatePost     
@@ -110,13 +89,6 @@ functions:
           path: post/{postId}
           method: put
           private: false
-    iam:
-      role:
-        statements:
-          - Effect: Allow
-            Action:
-              - dynamodb:UpdateItem
-            Resource: !GetAtt BlogTable.Arn
 
   deletePost:
     handler: src/api.deletePost     
@@ -128,11 +100,4 @@ functions:
       - http: # endpoint and params for api gatway
           path: post/{postId}
           method: delete
-          private: false
-    iam:
-      role:
-        statements:
-          - Effect: Allow
-            Action:
-              - dynamodb:DeleteItem
-            Resource: !GetAtt BlogTable.Arn  
+          private: false 
