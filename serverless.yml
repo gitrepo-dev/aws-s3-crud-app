@@ -22,7 +22,7 @@ provider:
             - dynamodb:DeleteItem
           # Resource: 'arn:aws:dynamodb:ap-south-1:*:*'
           # Resources: arn:aws:dynamodb:::${self:service}-${self:provider.stage}/*
-          Resource: !GetAtt BlogTable.Arn
+          Resource: arn:aws:apigateway:*::/*
   environment:
     DYNAMODB_TABLE_NAME: ${self:service}-${self:provider.stage}-table # table name use for data
 
@@ -42,19 +42,19 @@ resources: # actual config for table
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
 
-custom:
-  dynamodb:
-    stages:
-      - dev
-    start:
-      migrate: true
-  serverless-offline:
-        resourceRoutes: true # http proxy
+# custom:
+#   dynamodb:
+#     stages:
+#       - dev
+#     start:
+#       migrate: true
+#   serverless-offline:
+#         resourceRoutes: true # http proxy
 
 
-plugins:
-  - serverless-dynamodb-local
-  - serverless-offline
+# plugins:
+#   - serverless-dynamodb-local
+#   - serverless-offline
 
 functions:
   getAllPost:

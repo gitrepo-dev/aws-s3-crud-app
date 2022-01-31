@@ -1,6 +1,6 @@
-name: aws-dynamoDB-crud-app
+name: aws-dynamoDB-crud-app #name of your workflow
 
-on:
+on: #event
   push:
     branches:
       - aws/dynamodb
@@ -13,14 +13,14 @@ jobs:
       matrix:
         node-version: [14.x]
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v2 #action
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v1 #action
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - name: serverless deploy
-      uses: serverless/github-action@master
+    - run: npm ci #command
+    - name: serverless deploy #name of action
+      uses: serverless/github-action@master #action
       with:
         args: deploy
       env:

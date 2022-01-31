@@ -4,7 +4,7 @@
   "description": "crud app with aws dynamodb, lambda function, apigatway",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "serverless offline start --stage dev"
   },
   "keywords": [
     "dynamodb",

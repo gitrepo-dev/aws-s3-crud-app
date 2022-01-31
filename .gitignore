@@ -1,6 +1,9 @@
 
 # dependencies
 /node_modules
+/.dynamodb
+/.dockerignore
+/Dockerfile
 
 # enviroment
 /.env
