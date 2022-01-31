@@ -1,7 +1,7 @@
 #aws curd app
 #version 1.0.0
 
-service: aws-dynamoDB-crud-app
+service: aws-dynamoDB-crud-app-v1
 provider:
   name: aws
   runtime: nodejs14.x  
@@ -20,8 +20,6 @@ provider:
             - dynamodb:PutItem
             - dynamodb:UpdateItem
             - dynamodb:DeleteItem
-          # Resource: 'arn:aws:dynamodb:ap-south-1:*:*'
-          # Resources: arn:aws:dynamodb:::${self:service}-${self:provider.stage}/*
           Resource: !GetAtt BlogTable.Arn
   environment:
     DYNAMODB_TABLE_NAME: ${self:service}-${self:provider.stage}-table # table name use for data
@@ -42,19 +40,6 @@ resources: # actual config for table
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
 
-# custom:
-#   dynamodb:
-#     stages:
-#       - dev
-#     start:
-#       migrate: true
-#   serverless-offline:
-#         resourceRoutes: true # http proxy
-
-
-# plugins:
-#   - serverless-dynamodb-local
-#   - serverless-offline
 
 functions:
   getAllPost:
