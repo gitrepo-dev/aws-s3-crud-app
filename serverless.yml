@@ -44,7 +44,7 @@ resources: # actual config for table
 functions:
   getAllPost:
       handler: src/api.getAllPost     
-      name: get-all-post # lambda function name
+      name: get-all-posts # lambda function name
       description: this function for getting the all posts from dynamodb table
       timeout: 10 #sec to execute otherwise fail
       memorySize: 128 #it will take max size
@@ -56,7 +56,7 @@ functions:
 
   getPost:
     handler: src/api.getPost     
-    name: get-post # lambda function name
+    name: get-single-post # lambda function name
     description: this function for getting the post from dynamodb table
     timeout: 10 #sec to execute otherwise fail
     memorySize: 128 #it will take max size
@@ -80,7 +80,7 @@ functions:
 
   updatePost:
     handler: src/api.updatePost     
-    name: update-post # lambda function name
+    name: update-single-post # lambda function name
     description: this function update posts into dynamodb table
     timeout: 10 #sec to execute otherwise fail
     memorySize: 128 #it will take max size
@@ -92,7 +92,7 @@ functions:
 
   deletePost:
     handler: src/api.deletePost     
-    name: delete-post # lambda function name
+    name: delete-single-post # lambda function name
     description: this function delete posts into dynamodb table
     timeout: 10 #sec to execute otherwise fail
     memorySize: 128 #it will take max size
