@@ -22,7 +22,7 @@ provider:
             - dynamodb:DeleteItem
           # Resource: 'arn:aws:dynamodb:ap-south-1:*:*'
           # Resources: arn:aws:dynamodb:::${self:service}-${self:provider.stage}/*
-          Resource: arn:aws:apigateway:*::/*
+          Resource: !GetAtt BlogTable.Arn
   environment:
     DYNAMODB_TABLE_NAME: ${self:service}-${self:provider.stage}-table # table name use for data
 
@@ -68,6 +68,14 @@ functions:
             path: posts
             method: get
             private: true
+      iam:
+        role:
+          statements:
+            - Effect: Allow
+              Action:
+                - dynamodb:Scan
+              Resource: !GetAtt BlogTable.Arn
+
   getPost:
     handler: src/api.getPost     
     name: get-post # lambda function name
@@ -79,6 +87,14 @@ functions:
           path: post/{postId}
           method: get
           private: true
+    iam:
+      role:
+        statements:
+          - Effect: Allow
+            Action:
+              - dynamodb:Query
+            Resource: !GetAtt BlogTable.Arn
+
   createPost:
     handler: src/api.createPost     
     name: make-post # lambda function name
