@@ -3,7 +3,8 @@ const {
     GetItemCommand,
     PutItemCommand,
     DeleteItemCommand,
-    ScanItemCommand
+    ScanCommand,
+    UpdateItemCommand
 } = require("@aws-sdk/client-dynamodb")
 const { marshall, unmarshall } = require("@aws-sdk/util-dynamodb");
 
@@ -13,7 +14,7 @@ const { marshall, unmarshall } = require("@aws-sdk/util-dynamodb");
 const getAllPost = async (e) => {
     const response = { statusCode: 200 }
     try {
-        const { Items } = await db.send(new ScanItemCommand(params)) // send params to dynamo client to get data
+        const { Items } = await db.send(new ScanCommand({ TableName: process.env.DYNAMODB_TABLE_NAME })) // send params to dynamo client to get data
         console.log({ Items })
         response.body = JSON.stringify({
             message: "Successfully retrieved all posts.",
@@ -113,7 +114,7 @@ const updatePost = async (e) => {
                 [`:value${index}`]: body[key],
             }), {})),
         };
-        const res = await db.send(new PutItemCommand(params))
+        const res = await db.send(new UpdateItemCommand(params))
         console.log(res)
         response.body = JSON.stringify({
             message: "Successfully updated post.",
