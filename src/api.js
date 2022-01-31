@@ -115,11 +115,11 @@ const updatePost = async (e) => {
                 [`:value${index}`]: obj[key],
             }), {})),
         };
-        const res = await db.send(new UpdateItemCommand(params));
+        const result = await db.send(new UpdateItemCommand(params));
         console.log(res)
         response.body = JSON.stringify({
             message: "Successfully updated post.",
-            data: res
+            data: result
         })
     } catch (e) {
         response.body = JSON.stringify({
