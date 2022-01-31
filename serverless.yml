@@ -67,7 +67,7 @@ functions:
         - http: # endpoint and params for api gatway
             path: posts
             method: get
-            private: true
+            private: false
       iam:
         role:
           statements:
@@ -86,7 +86,7 @@ functions:
       - http: # endpoint and params for api gatway
           path: post/{postId}
           method: get
-          private: true
+          private: false
     iam:
       role:
         statements:
