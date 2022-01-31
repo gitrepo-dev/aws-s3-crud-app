@@ -92,7 +92,7 @@ functions:
         statements:
           - Effect: Allow
             Action:
-              - dynamodb:Query
+              - dynamodb:GetItem
             Resource: !GetAtt BlogTable.Arn
 
   createPost:
@@ -105,7 +105,15 @@ functions:
       - http: # endpoint and params for api gatway
           path: post
           method: post
-          private: true
+          private: false
+    iam:
+      role:
+        statements:
+          - Effect: Allow
+            Action:
+              - dynamodb:PutItem
+            Resource: !GetAtt BlogTable.Arn
+
   updatePost:
     handler: src/api.updatePost     
     name: update-post # lambda function name
@@ -116,7 +124,15 @@ functions:
       - http: # endpoint and params for api gatway
           path: post/{postId}
           method: put
-          private: true
+          private: false
+    iam:
+      role:
+        statements:
+          - Effect: Allow
+            Action:
+              - dynamodb:dynamodb:UpdateItem
+            Resource: !GetAtt BlogTable.Arn
+
   deletePost:
     handler: src/api.deletePost     
     name: delete-post # lambda function name
@@ -127,4 +143,11 @@ functions:
       - http: # endpoint and params for api gatway
           path: post/{postId}
           method: delete
-          private: true
+          private: false
+    iam:
+      role:
+        statements:
+          - Effect: Allow
+            Action:
+              - dynamodb:dynamodb:DeleteItem
+            Resource: !GetAtt BlogTable.Arn  
