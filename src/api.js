@@ -97,14 +97,14 @@ const createPost = async (e) => {
 
 
 // update post
-const updatePost = async (e) => {
+const updatePost = async (event) => {
     const response = { statusCode: 202 }
     try {
-        const obj = JSON.parse(e.body)
-        const objKeys = Object.keys(obj);
+        const body = JSON.parse(event.body);
+        const objKeys = Object.keys(body);
         const params = {
             TableName: process.env.DYNAMODB_TABLE_NAME,
-            Key: marshall({ postId: e.pathParameters.postId }),
+            Key: marshall({ postId: event.pathParameters.postId }),
             UpdateExpression: `SET ${objKeys.map((_, index) => `#key${index} = :value${index}`).join(", ")}`,
             ExpressionAttributeNames: objKeys.reduce((acc, key, index) => ({
                 ...acc,
@@ -112,7 +112,7 @@ const updatePost = async (e) => {
             }), {}),
             ExpressionAttributeValues: marshall(objKeys.reduce((acc, key, index) => ({
                 ...acc,
-                [`:value${index}`]: obj[key],
+                [`:value${index}`]: body[key],
             }), {})),
         };
         const result = await db.send(new UpdateItemCommand(params));
